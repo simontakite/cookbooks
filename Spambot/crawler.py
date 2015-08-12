@@ -48,13 +48,13 @@ def download(max_iterations):
 
             ## Find more URLs
             import re
-            
+
             ## The regular expression we will use to search for URLs:
             url_expression= r"http://+[\w\d:#@%/;$()~_?\+-=\\\.&]*"
             regex = re.compile(url_expression)
-            
-            ## Find all the URLs and 
-            
+
+            ## Find all the URLs and
+
             results = regex.findall(line)
             if results:
                 for result in results:
@@ -63,32 +63,32 @@ def download(max_iterations):
             ## of URLs we need to crawl over.
                     if result not in searched_list:
                         to_search_list.append(result)
-            
+
             ## Find email addresses
-            
-            ## The regular expression we will use to search for email 
+
+            ## The regular expression we will use to search for email
             ## addresses. For more information on this, have a look at
             ## the "validating-email" example.
-            
+
             email_expression = r"\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6}"
             eregex = re.compile(email_expression)
-            
+
             ## Find all the email addresses
             e_results = eregex.findall(line)
             if e_results:
                 for e_result in e_results:
-                    
+
             ## If the email address is new, add it to
             ## our email list.
                     if e_result not in email_list:
                         email_list.append(e_result)
-                    
+
         iteration += 1
 
 
 def output_results():
 
-    ## This function will print the following information: 
+    ## This function will print the following information:
     ## number of sites in our sites to crawl list, the number
     ## of sites we actually crawled, and the total number of
     ## emails collected.
@@ -99,7 +99,7 @@ def output_results():
 
 def write_results():
 
-    ## Write all the information that the 
+    ## Write all the information that the
     ## output_results() function prints out (see above)
     ## into a file called "info.txt"
 
@@ -116,7 +116,7 @@ def write_results():
 
     file_name = "email_addresses.txt"
     n = open(file_name, "w")
- 
+
     for email in email_list:
         entry = email + "\n"
         n.write(entry)
@@ -144,6 +144,6 @@ def main():
     output_results()
     write_results()
 
-    
+
 if __name__ == "__main__":
     main()

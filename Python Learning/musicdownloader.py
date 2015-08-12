@@ -2,27 +2,32 @@ import wx
 from wxPython.wx import *
 import sys
 import threading
-import urllib, urllib2
+import urllib
+import urllib2
 import cookielib
 from bs4 import BeautifulSoup as BS
-import  cStringIO
+import cStringIO
 
 
 class Get_file():
 
     def get_url(self, query):
-        site1 = urllib.urlopen('http://www.youtube.com/results?search_query=%s'%query)
+        site1 = urllib.urlopen(
+            'http://www.youtube.com/results?search_query=%s' % query)
         html = site1.read()
         soup = BS(html)
 
         links = soup.findAll('a')
-        vidlinks = [link.get('href') for link in links if link.get('href') is not None]
-        vlink = [ i for i in vidlinks if '/watch?v=' in i][0]
+        vidlinks = [link.get('href')
+                    for link in links if link.get('href') is not None]
+        vlink = [i for i in vidlinks if '/watch?v=' in i][0]
 
-        img_link = soup.findAll('img',{'alt':'Thumbnail', 'width':'185'})[0].get('src')
-        img_url =  'http:%s' %img_link
+        img_link = soup.findAll('img', {'alt': 'Thumbnail', 'width': '185'})[
+            0].get('src')
+        img_url = 'http:%s' % img_link
 
-        imagethread = threading.Thread(target=lambda:urllib.urlretrieve(img_url, 'Files\image.jpg'))
+        imagethread = threading.Thread(
+            target=lambda: urllib.urlretrieve(img_url, 'Files\image.jpg'))
         imagethread.start()
 
         return vlink
@@ -37,15 +42,15 @@ class Get_file():
             urllib2.HTTPRedirectHandler(),
             urllib2.HTTPHandler(debuglevel=0))
 
-        self.opener.addheaders = [('User-agent', "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.72 Safari/537.36")]
-
+        self.opener.addheaders = [
+            ('User-agent', "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.72 Safari/537.36")]
 
         forms = {"youtubeURL": url,
-                 'quality':quality
-                }
+                 'quality': quality
+                 }
 
         data = urllib.urlencode(forms)
-        req = urllib2.Request('http://www.convertmemp3.com/',data)
+        req = urllib2.Request('http://www.convertmemp3.com/', data)
         res = self.opener.open(req)
 
         self.convhtml = res.read()
@@ -57,33 +62,37 @@ class Get_file():
             links = soup.findAll('a')
             dllink = [link.get('href') for link in links][7]
 
-            dlpage = urllib.urlopen("http://www.convertmemp3.com%s"%(dllink)).read()
+            dlpage = urllib.urlopen(
+                "http://www.convertmemp3.com%s" % (dllink)).read()
             soup = BS(dlpage)
             download = [lnk.get('href') for lnk in soup.findAll('a')][7]
-            urllib.urlretrieve("http://www.convertmemp3.com%s"%(download),"%s.mp3"%name)
+            urllib.urlretrieve("http://www.convertmemp3.com%s" %
+                               (download), "%s.mp3" % name)
 
         except urllib2.HTTPError, error:
             log.Error('Cant download file')
 
+
 class GUI(wx.Frame):
+
     def __init__(self, parent, id, title):
 
-        with open('/home/absolootly/dir.txt','r') as dirtxt:
+        with open('/home/absolootly/dir.txt', 'r') as dirtxt:
             self.new_path = dirtxt.read()
 
         wx.Frame.__init__(self, parent, id, title, size=(500, 500))
 
         menubar = wx.MenuBar()
         fileMenu = wx.Menu()
-        fitem = fileMenu.Append(wx.ID_PREFERENCES,'Change Download Directory', 'Change Dl Dir')
-        fitem2 = fileMenu.Append(wx.ID_HELP,'Information/Help', 'Info')
-        fitem3 = fileMenu.Append(wx.ID_EXIT,'Exit', 'Quit application')
+        fitem = fileMenu.Append(
+            wx.ID_PREFERENCES, 'Change Download Directory', 'Change Dl Dir')
+        fitem2 = fileMenu.Append(wx.ID_HELP, 'Information/Help', 'Info')
+        fitem3 = fileMenu.Append(wx.ID_EXIT, 'Exit', 'Quit application')
         menubar.Append(fileMenu, '&Options')
         self.SetMenuBar(menubar)
         self.Bind(wx.EVT_MENU, self.get_Dir, fitem)
         self.Bind(wx.EVT_MENU, self.Info, fitem2)
         self.Bind(wx.EVT_MENU, self.Exit, fitem3)
-
 
         self.retreive_range = 10
         self.convert_range = 10
@@ -104,7 +113,6 @@ class GUI(wx.Frame):
         self.panel = wx.Panel(self)
         self.panel.SetBackgroundColour('#000000')
 
-
         mfont = wx.Font(14, wx.MODERN, wx.NORMAL, wx.NORMAL, False, u'Impact')
         sfont = wx.Font(10, wx.MODERN, wx.NORMAL, wx.NORMAL, False, u'Impact')
 
@@ -118,18 +126,19 @@ class GUI(wx.Frame):
         self.tc = wx.TextCtrl(self.panel, 1, '')
         self.tc.SetFont(sfont)
         hbox1.Add(self.tc, proportion=1)
-        vbox.Add(hbox1, flag=wx.EXPAND|wx.LEFT|wx.RIGHT|wx.TOP, border=10)
+        vbox.Add(hbox1, flag=wx.EXPAND | wx.LEFT |
+                 wx.RIGHT | wx.TOP, border=10)
 
         vbox.Add((-1, 10))
 
         hbox2 = wx.BoxSizer(wx.HORIZONTAL)
         namelbl = wx.StaticText(self.panel, label='Filename (optional)  ')
         namelbl.SetForegroundColour("#FFFFFF")
-        hbox2.Add(namelbl,flag=wx.LEFT)
+        hbox2.Add(namelbl, flag=wx.LEFT)
         self.nametc = wx.TextCtrl(self.panel)
         hbox2.Add(self.nametc)
         self.rb1 = wx.RadioButton(self.panel, label='',
-            style=wx.RB_GROUP)
+                                  style=wx.RB_GROUP)
         rb1text = wx.StaticText(self.panel, label='   High Quality (Slower) ')
         self.rb2 = wx.RadioButton(self.panel, label='')
         rb2text = wx.StaticText(self.panel, label='   Medium Quality ')
@@ -142,24 +151,25 @@ class GUI(wx.Frame):
         rb1text.SetForegroundColour('#FFFFFF')
         rb2text.SetForegroundColour('#FFFFFF')
 
-        vbox.Add(hbox2, flag=wx.LEFT|wx.TOP, border=8)
+        vbox.Add(hbox2, flag=wx.LEFT | wx.TOP, border=8)
 
         vbox.Add((-1, 10))
 
-        con = wx.Button(self.panel, label='Convert!', size=(200,25))
+        con = wx.Button(self.panel, label='Convert!', size=(200, 25))
         self.Bind(wx.EVT_BUTTON, self.retrieve, con)
 
         hbox3 = wx.BoxSizer(wx.HORIZONTAL)
         con.SetFont(mfont)
         hbox3.Add(con)
-        vbox.Add(hbox3, flag=wx.CENTER|wx.TOP, border=8)
+        vbox.Add(hbox3, flag=wx.CENTER | wx.TOP, border=8)
 
         vbox.Add((-1, 10))
 
         lbox1 = wx.BoxSizer(wx.HORIZONTAL)
         sline1 = wx.StaticLine(self.panel)
-        lbox1.Add(sline1, proportion = 1)
-        vbox.Add(lbox1, flag=wx.EXPAND|wx.LEFT|wx.RIGHT|wx.TOP, border=10)
+        lbox1.Add(sline1, proportion=1)
+        vbox.Add(lbox1, flag=wx.EXPAND | wx.LEFT |
+                 wx.RIGHT | wx.TOP, border=10)
 
         vbox.Add((-1, 10))
 
@@ -170,7 +180,8 @@ class GUI(wx.Frame):
         self.text.SetFont(mfont)
         hbox4.Add(self.text, wx.ALIGN_RIGHT)
         hbox4.Add(self.gauge, wx.ALIGN_LEFT)
-        vbox.Add(hbox4, flag=wx.EXPAND|wx.LEFT|wx.RIGHT|wx.TOP, border=15)
+        vbox.Add(hbox4, flag=wx.EXPAND | wx.LEFT |
+                 wx.RIGHT | wx.TOP, border=15)
 
         vbox.Add((-1, 10))
 
@@ -179,9 +190,9 @@ class GUI(wx.Frame):
         self.dltext.SetFont(mfont)
         self.dltext.SetForegroundColour('#FFFFFF')
 
-        hbox5.Add(self.dltext,wx.CENTER)
+        hbox5.Add(self.dltext, wx.CENTER)
 
-        vbox.Add(hbox5, flag=wx.CENTER|wx.TOP, border=10)
+        vbox.Add(hbox5, flag=wx.CENTER | wx.TOP, border=10)
 
         vbox.Add((-1, 10))
 
@@ -191,15 +202,16 @@ class GUI(wx.Frame):
         self.Centre()
 
     def Error(self, dialog):
-        wx.MessageBox(dialog , 'Info',
-            wx.OK | wx.ICON_INFORMATION)
+        wx.MessageBox(dialog, 'Info',
+                      wx.OK | wx.ICON_INFORMATION)
 
     def get_Dir(self, e):
-        dialog = wxDirDialog ( None, message = 'Pick a directory.', style = wxDD_NEW_DIR_BUTTON )
+        dialog = wxDirDialog(
+            None, message='Pick a directory.', style=wxDD_NEW_DIR_BUTTON)
 
         if dialog.ShowModal() == wxID_OK:
             self.new_path = dialog.GetPath()
-            with open('Files\dir.txt','w') as dirtxt:
+            with open('Files\dir.txt', 'w') as dirtxt:
                 dirtxt.write(self.new_path + '\\')
 
         dialog.Destroy()
@@ -220,9 +232,9 @@ class GUI(wx.Frame):
         # convert to a data stream
         stream = cStringIO.StringIO(data)
         # convert to a bitmap
-        bmp = wx.BitmapFromImage( wx.ImageFromStream( stream ))
+        bmp = wx.BitmapFromImage(wx.ImageFromStream(stream))
         # show the bitmap, (5, 5) are upper left corner coordinates
-        thumb = wx.StaticBitmap(self, -1, bmp, (90,255))
+        thumb = wx.StaticBitmap(self, -1, bmp, (90, 255))
 
         self.Hide()
         self.Show()
@@ -230,12 +242,14 @@ class GUI(wx.Frame):
         self.text.SetLabel('Converting...')
         if self.rb1.GetValue() == True:
             self.timer2.Start(1000)
-            worker1 = threading.Thread(target=lambda: self.getfile.get_file('http://www.youtube.com/%s'%self.vidurl, '320'))
+            worker1 = threading.Thread(target=lambda: self.getfile.get_file(
+                'http://www.youtube.com/%s' % self.vidurl, '320'))
             worker1.start()
 
         elif self.rb2.GetValue() == True:
             self.timer2.Start(600)
-            worker1 = threading.Thread(target=lambda: self.getfile.get_file('http://www.youtube.com/%s'%self.vidurl, '128'))
+            worker1 = threading.Thread(target=lambda: self.getfile.get_file(
+                'http://www.youtube.com/%s' % self.vidurl, '128'))
             worker1.start()
 
     def download(self):
@@ -245,7 +259,8 @@ class GUI(wx.Frame):
         self.filename = self.nametc.GetValue()
         file_name = self.new_path + self.filename
         try:
-            worker2 = threading.Thread(target=lambda: self.getfile.download_file(self.getfile.convhtml, file_name  ))
+            worker2 = threading.Thread(target=lambda: self.getfile.download_file(
+                self.getfile.convhtml, file_name))
             worker2.start()
         except:
             self.Error("Error on conversion! Please retry")
@@ -297,16 +312,17 @@ class GUI(wx.Frame):
         self.timer3 = wx.Timer(self, 1)
 
     def Info(self, e):
-        log = InfoDialog(None,-1,'Information')
+        log = InfoDialog(None, -1, 'Information')
 
     def Exit(self, event):
         self.Close()
 
+
 class InfoDialog(wx.Frame):
+
     def __init__(self, parent, id, title):
 
         wx.Frame.__init__(self, parent, id, title, size=(400, 250))
-
 
         panel = wx.Panel(self, wx.ID_ANY)
         panel.SetBackgroundColour('#000000')
@@ -316,7 +332,7 @@ class InfoDialog(wx.Frame):
         txt = wx.StaticText(panel, label=text)
         txt.SetForegroundColour('#FFFFFF')
         sizer = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(txt, 1, wx.EXPAND|wx.ALIGN_CENTER, 5)
+        sizer.Add(txt, 1, wx.EXPAND | wx.ALIGN_CENTER, 5)
 
         panel.SetSizer(sizer)
 
@@ -327,5 +343,5 @@ class InfoDialog(wx.Frame):
         self.Close()
 
 app = wx.App()
-log = GUI(None,-1,'Music Downloader')
+log = GUI(None, -1, 'Music Downloader')
 app.MainLoop()
