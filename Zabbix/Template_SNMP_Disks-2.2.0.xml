@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
-  <version>2.0</version>
-  <date>2013-11-12T16:13:39Z</date>
-  <groups>
-    <group>
-      <name>Templates</name>
-    </group>
-  </groups>
-  <templates>
-    <template>
-      <template>Template SNMP Disks</template>
-      <name>Template SNMP Disks</name>
-      <groups>
+    <version>2.0</version>
+    <date>2013-11-12T16:13:39Z</date>
+    <groups>
         <group>
-          <name>Templates</name>
+            <name>Templates</name>
         </group>
-      </groups>
-      <applications>
-        <application>
-          <name>Disk partitions</name>
-        </application>
-      </applications>
-      <items/>
-      <discovery_rules>
-        <discovery_rule>
-          <name>Disk partitions</name>
-          <type>4</type>
-          <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
-          <snmp_oid>HOST-RESOURCES-MIB::hrStorageDescr</snmp_oid>
-          <key>hrStorageDescr</key>
-          <delay>3600</delay>
-          <status>0</status>
-          <allowed_hosts/>
-          <snmpv3_contextname/>
-          <snmpv3_securityname/>
-          <snmpv3_securitylevel>0</snmpv3_securitylevel>
-          <snmpv3_authprotocol>0</snmpv3_authprotocol>
-          <snmpv3_authpassphrase/>
-          <snmpv3_privprotocol>0</snmpv3_privprotocol>
-          <snmpv3_privpassphrase/>
-          <delay_flex/>
-          <params/>
-          <ipmi_sensor/>
-          <authtype>0</authtype>
-          <username/>
-          <password/>
-          <publickey/>
-          <privatekey/>
-          <port/>
-          <filter>{#SNMPVALUE}:@Storage devices for SNMP discovery</filter>
+    </groups>
+    <templates>
+        <template>
+            <template>Template SNMP Disks</template>
+            <name>Template SNMP Disks</name>
+            <groups>
+                <group>
+                    <name>Templates</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>Disk partitions</name>
+                </application>
+            </applications>
+            <items/>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>Disk partitions</name>
+                    <type>4</type>
+                    <snmp_community>{$SNMP_COMMUNITY}</snmp_community>
+                    <snmp_oid>HOST-RESOURCES-MIB::hrStorageDescr</snmp_oid>
+                    <key>hrStorageDescr</key>
+                    <delay>3600</delay>
+                    <status>0</status>
+                    <allowed_hosts/>
+                    <snmpv3_contextname/>
+                    <snmpv3_securityname/>
+                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                    <snmpv3_authpassphrase/>
+                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                    <snmpv3_privpassphrase/>
+                    <delay_flex/>
+                    <params/>
+                    <ipmi_sensor/>
+                    <authtype>0</authtype>
+                    <username/>
+                    <password/>
+                    <publickey/>
+                    <privatekey/>
+                    <port/>
+                    <filter>{#SNMPVALUE}:@Storage devices for SNMP discovery</filter>
           <lifetime>30</lifetime>
           <description>The rule will discover all dis partitions matching the global regexp "Storage devices for SNMP discovery".&#13;\n&#13;\n{$SNMP_COMMUNITY} is a global macro.</description>
           <item_prototypes>
@@ -131,7 +131,7 @@
               <inventory_link>0</inventory_link>
               <applications>
                 <application>
-                  <name>Disk partitions</name>
+                    <name>Disk partitions</name>
                 </application>
               </applications>
               <valuemap/>
