@@ -3,10 +3,10 @@ text_file_indexer.py
 A program to index a text file.
 Author: Vasudev Ram - www.dancingbison.com
 Copyright 2014 Vasudev Ram
-Given a text file somefile.txt, the program will read it completely, 
-and while doing so, record the occurrences of each unique word, 
-and the line numbers on which they occur. This information is 
-then written to an index file somefile.idx, which is also a text 
+Given a text file somefile.txt, the program will read it completely,
+and while doing so, record the occurrences of each unique word,
+and the line numbers on which they occur. This information is
+then written to an index file somefile.idx, which is also a text
 file.
 """
 
@@ -15,29 +15,29 @@ import os
 import string
 from debug1 import debug1
 
-def index_text_file(txt_filename, idx_filename, 
+def index_text_file(txt_filename, idx_filename,
     delimiter_chars=",.;:!?"):
     """
-    Function to read txt_file name and create an index of the 
+    Function to read txt_file name and create an index of the
     occurrences of words in it. The index is written to idx_filename.
-    There is one index entry per line in the index file. An index entry 
+    There is one index entry per line in the index file. An index entry
     is of the form: word line_num line_num line_num ...
-    where "word" is a word occurring in the text file, and the instances 
-    of "line_num" are the line numbers on which that word occurs in the 
-    text file. The lines in the index file are sorted by the leading word 
-    on the line. The line numbers in an index entry are sorted in 
-    ascending order. The argument delimiter_chars is a string of one or 
-    more characters that may adjoin words and the input and are not 
-    wanted to be considered as part of the word. The function will remove 
-    those delimiter characters from the edges of the words before the rest 
+    where "word" is a word occurring in the text file, and the instances
+    of "line_num" are the line numbers on which that word occurs in the
+    text file. The lines in the index file are sorted by the leading word
+    on the line. The line numbers in an index entry are sorted in
+    ascending order. The argument delimiter_chars is a string of one or
+    more characters that may adjoin words and the input and are not
+    wanted to be considered as part of the word. The function will remove
+    those delimiter characters from the edges of the words before the rest
     of the processing.
     """
     try:
         txt_fil = open(txt_filename, "r")
         """
-        Dictionary to hold words and the line numbers on which 
-        they occur. Each key in the dictionary is a word and the 
-        value corresponding to that key is a list of line numbers 
+        Dictionary to hold words and the line numbers on which
+        they occur. Each key in the dictionary is a word and the
+        value corresponding to that key is a list of line numbers
         on which that word occurs in txt_filename.
         """
 
@@ -82,8 +82,8 @@ def index_text_file(txt_filename, idx_filename,
         idx_fil = open(idx_filename, "w")
 
         # Write the words and their line numbers to the index file.
-        # Since we read the text file sequentially, there is no need 
-        # to sort the line numbers associated with each word; they are 
+        # Since we read the text file sequentially, there is no need
+        # to sort the line numbers associated with each word; they are
         # already in sorted order.
         for word in word_keys:
             line_nums = word_occurrences[word]
@@ -113,5 +113,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 # EOF
