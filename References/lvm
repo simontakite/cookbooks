@@ -1,0 +1,68 @@
+# Logical Volume Management
+# 
+# PHYSICAL VOLUMES
+Create		pvcreate
+Inspect		pvdisplay
+Modify		pvchange
+Check		pvck
+
+# VOLUME GROUP
+Create		vgcreate
+Modify		vgchange
+Extend		vgextend
+Inspect		vgdisplay
+Check		vgck
+Enable		vgscan
+
+# LOGICAL VOLUME
+Create		lvcreate
+Modify		lvchange
+Resize		lvresize
+Inspect		lvdisplay
+
+# Create physical volume
+fdisk -l
+fdisk /dev/sdb
+
+# Create volume Group
+vgcreate vgpool /dev/sdb1
+
+# Create logical volume
+lvcreate -L 3G -n lvstuff vgpool
+
+# Format and Mount the Logical Volume
+mkfs -t ext3 /dev/vgpool/lvstuff
+mkdir /mnt/stuff
+mount -t ext3 /dev/vgpool/lvstuff /mnt/stuff
+
+# Resizing a Logical Volume
+vgextend vgpool /dev/sdc1
+
+# Extend Logical Volume
+lvextend -L+3G /dev/vgpool/lvstuff
+
+# Extend File System
+# To make the file system use the entire 11 GB available you 
+# have to use the command resize2fs. Just point resize2fs to the
+# 11 GB logical volume and it will do the magic for you.
+resize2fs /dev/vgpool/lvstuff
+
+# Backing up a Logical Volume / Snapshots
+# To create a snapshot of lvstuff use the lvcreate command like
+# before but use the -s flag.
+#
+# Create New Snapshot
+lvcreate -L512M -s -n lvstuffbackup /dev/vgpool/lvstuff
+
+# Mount New Snapshot
+mkdir /mnt/lvstuffbackup
+mount /dev/vgpool/lvstuffbackup /mnt/lvstuffbackup
+
+# Copy Snapshot and Delete Logical Volume
+tar -cf /home/rothgar/Backup/lvstuff-ss /mnt/lvstuffbackup/
+
+# Deleting a Logical Volume
+umount /mnt/lvstuff
+lvremove /dev/vgpool/lvstuff
+vgremove vgpool
+pvremove /dev/sdb1 /dev/sdc1

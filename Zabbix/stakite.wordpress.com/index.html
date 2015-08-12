@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html id="ie7" lang="en">
+<![endif]-->
+<!--[if IE 8]>
+<html id="ie8" lang="en">
+<![endif]-->
+<!--[if !(IE 7) & !(IE 8)]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Simon Takite | Rumblings of a system administrator on how to solve problems as inefficiently as possible :D</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://stakite.wordpress.com/xmlrpc.php" />
+<!--[if lt IE 9]>
+<script src="http://s0.wp.com/wp-content/themes/pub/chateau/js/html5.js?m=1315596887g" type="text/javascript"></script>
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="Simon Takite &raquo; Feed" href="http://stakite.wordpress.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Simon Takite &raquo; Comments Feed" href="http://stakite.wordpress.com/comments/feed/" />
+<script type="text/javascript">
+/* <![CDATA[ */
+function addLoadEvent(func){var oldonload=window.onload;if(typeof window.onload!='function'){window.onload=func;}else{window.onload=function(){oldonload();func();}}}
+/* ]]> */
+</script>
+<link rel='stylesheet' id='all-css-0' href='http://s0.wp.com/_static/??-eJyNkdFuwyAMRX9ozJnUdU/TvoUQl5AajLCjqH9fkmzrqm5oT1yje+yLgSUbx0kxKcTZZJp9SAISA+ElF57Q6X317ESe4HeMwhkFJtRs3dls1YO9J/Y3gL3HgWc1JybiBZYweGzOcFyw3sdsdXVEHIJFwlhtLSzm4xe1yrEGfMymY+0jkOce3GgV7QyiF8L/GENyu9ksuQ7akQCJNVRKvkUrpEc2xM5q4HRXmBPZUFpowXWxVXqorh9lC8osurcGGW1Z4c+znTJh2R91k3+taDyAJ+4ttTruvy5bcs88FLTD1vEjvr8cuu7Yvb4duukKn9YByw==' type='text/css' media='all' />
+<link rel='stylesheet' id='print-css-0' href='http://s0.wp.com/wp-content/mu-plugins/global-print/global-print.css?m=1387483371g' type='text/css' media='print' />
+<script type='text/javascript'>
+/* <![CDATA[ */
+var LoggedOutFollow = {"invalid_email":"Your subscription did not succeed, please try again with a valid email address."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://s1.wp.com/_static/??-eJyFjd0KwjAMRl/IrttQ8EZ8lv1kJbVtapOu6NNbQUFR2FVCcr7v6BLVREEgiLasPY3oQGWGNJh6UxgWaizvdOUwTC7PwE/QXjOk22tsAsqjSYNA4zG84Q9rJBYPzFX55/utwrAilE3MgsRhuqgEjPef1tGRUdFlg4F13Q3MlEUt5BwVXXA2IDVz9qdu37aHY9e3vX0APQlvpA=='></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://stakite.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://stakite.wordpress.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress.com" />
+<link rel='shortlink' href='http://wp.me/1PBXR' />
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Simon Takite" />
+<meta property="og:description" content="Rumblings of a system administrator on how to solve problems as inefficiently as possible :D" />
+<meta property="og:url" content="http://stakite.wordpress.com/" />
+<meta property="og:site_name" content="Simon Takite" />
+<meta property="og:image" content="http://0.gravatar.com/blavatar/cb35d2a29553627221baccc53efbc208?s=200" />
+<meta name="twitter:site" content="@wordpressdotcom" />
+<meta property="fb:app_id" content="249643311490" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+<link rel="shortcut icon" type="image/x-icon" href="http://0.gravatar.com/blavatar/afa8f73213efc281a7bf08bbb01459af?s=16" sizes="16x16" />
+<link rel="icon" type="image/x-icon" href="http://0.gravatar.com/blavatar/afa8f73213efc281a7bf08bbb01459af?s=16" sizes="16x16" />
+<link rel="apple-touch-icon-precomposed" href="http://0.gravatar.com/blavatar/cb35d2a29553627221baccc53efbc208?s=114" />
+<link rel='openid.server' href='http://stakite.wordpress.com/?openidserver=1' />
+<link rel='openid.delegate' href='http://stakite.wordpress.com/' />
+<link rel="search" type="application/opensearchdescription+xml" href="http://stakite.wordpress.com/osd.xml" title="Simon Takite" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://wordpress.com/opensearch.xml" title="WordPress.com" />
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none !important;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="Simon Takite" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Rumblings of a system administrator on how to solve problems as inefficiently as possible :D" /><meta name="msapplication-task" content="name=Subscribe;action-uri=http://stakite.wordpress.com/feed/;icon-uri=http://0.gravatar.com/blavatar/afa8f73213efc281a7bf08bbb01459af?s=16" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=http://s2.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=http://s2.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=http://s2.wp.com/i/favicon.ico" /><meta name="title" content="Simon Takite on WordPress.com" />
+<meta name="description" content="Rumblings of a system administrator on how to solve problems as inefficiently as possible :D (by Simon Takite)" />
+<style type="text/css" id="syntaxhighlighteranchor"></style>
+</head>
+
+<body class="home blog mp6 two-column sidebar-content highlander-enabled highlander-light">
+<div id="page" class="hfeed">
+		<div id="page-inner">
+		<header id="branding" role="banner">
+			<nav id="menu" role="navigation">
+				<ul class="menu clear-fix"><li class="page_item page-item-2"><a href="http://stakite.wordpress.com/about/">About me</a></li></ul>
+			</nav><!-- end #menu -->
+
+			<div id="main-title">
+				<hgroup>
+					<h1 id="site-title"><a href="http://stakite.wordpress.com/" title="Simon Takite" rel="home">Simon Takite</a></h1>
+												<h2 id="site-description">~ Rumblings of a system administrator on how to solve problems as inefficiently as possible :D</h2>
+									</hgroup>
+			</div><!-- end #main-title -->
+
+							<div id="search">
+					
+<form method="get" action="http://stakite.wordpress.com//" >
+	<div>
+		<label for="s" class="assistive-text">Search:</label>
+		<input type="text" value="Search&hellip;" name="s" id="s" onfocus="this.value=''" />
+		<input type="submit" name="search" value="Go" />
+	</div>
+</form>				</div><!-- end #search -->
+			
+			<div id="main-image">
+							<a href="http://stakite.wordpress.com/">
+													<img src="http://stakite.files.wordpress.com/2011/09/cropped-41.jpg" width="960" height="260" alt="Simon Takite" title="Simon Takite" />
+									</a>
+						</div><!-- end #main-image -->
+		</header><!-- #branding -->
+		<div id="main" class="clear-fix">
+<div id="primary">
+	<div id="content" class="clear-fix" role="main">
+
+	<article id="post-36" class="post-36 post type-post status-publish format-standard hentry category-active-directory">
+	<header class="post-title">
+								<h1><a href="http://stakite.wordpress.com/2013/07/26/lack-a-rack/" rel="bookmark">Lack -a- Rack</a></h1>								<a href="http://stakite.wordpress.com/2013/07/26/lack-a-rack/" class="post-permalink">		<p class="post-date">
+			<strong>26</strong>
+			<em>Friday</em>
+			<span>Jul 2013</span>
+		</p>
+	</a>
+	<div class="post-info clear-fix">
+		<p>
+			Posted <span class="by-author"> by <span class="author vcard"><a class="url fn n" href="http://stakite.wordpress.com/author/simontakite/" title="View all posts by Simon Takite" rel="author">Simon Takite</a></span></span> in <a href="http://stakite.wordpress.com/category/active-directory/" title="View all posts in Active Directory" rel="category tag">Active Directory</a>		</p>
+		<p class="post-com-count">
+			<strong>&asymp; <a href="http://stakite.wordpress.com/2013/07/26/lack-a-rack/#respond" title="Comment on Lack -a- Rack">Leave a comment</a></strong>
+		</p>
+	</div><!-- end .post-info -->
+						</header><!-- end .post-title -->
+	<div class="post-content clear-fix">
+
+			<div class="post-extras">
+					</div><!-- end .post-extras -->
+
+		<div class="post-entry">
+			<p><a href="http://stakite.files.wordpress.com/2013/07/img_0194.jpg"><img class="alignleft size-thumbnail wp-image-45" alt="IMG_0194" src="http://stakite.files.wordpress.com/2013/07/img_0194.jpg?w=111&#038;h=150"   /></a>After failing to find reasonably priced racks in Trondheim, an idea came to my mind.. I could get a rack for 9.99 <span class='wp-smiley emoji emoji-smile' title=':)'>:)</span> .. So you will need;</p>
+<p><strong>- </strong>2 assembled Ikeas&#8217;s Lack table&#8230;really cheap and you can chose the finish you like best!<br />
+<strong>- </strong>2 braking and pivoting wheels<br />
+<strong>-</strong> 2 pivoting wheels<br />
+<strong>- </strong>4 mounting brackets (mine were 2&#215;6 cm, 8 holes)<br />
+<strong>-</strong> a bunch of wood screws about 1 cm long and fitting the holes in your brackets</p>
+<p><a href="http://stakite.files.wordpress.com/2013/07/img_0186.jpg"><img class="alignleft size-thumbnail wp-image-42" alt="IMG_0186" src="http://stakite.files.wordpress.com/2013/07/img_0186.jpg?w=150&#038;h=112" width="150" height="112" /></a>Fix the wheels by four wood screw for each one to the corner of the table. Lack table is squared so it doesn&#8217;t matter what side. Just keep in mind that braking wheels are going to be in the front side of your finished rack.</p>
+<h2>Stack up the Lacks and make your Rack</h2>
+<p><a href="http://stakite.files.wordpress.com/2013/07/img_0189.jpg"><img class="alignleft size-thumbnail wp-image-44" alt="IMG_0189" src="http://stakite.files.wordpress.com/2013/07/img_0189.jpg?w=111&#038;h=150"   /></a>Turn your newly wheeled Lack and stack the second one over it feet to feet to build the basic structure of your rack. At the bottom of it you can see the bracket that will old them firmly together.</p>
+<p>Fix the feet of your tables together by brackets and wood screws paying attention to obtain the best alignment possible. The task is quite easily completed by lying your rack on its side.</p>
+<h2>Stack up &#8230;</h2>
+<p><a href="http://stakite.files.wordpress.com/2013/07/img_0194.jpg"><img class="alignleft size-thumbnail wp-image-45" alt="IMG_0194" src="http://stakite.files.wordpress.com/2013/07/img_0194.jpg?w=111&#038;h=150"   /></a>You have it! Start stacking your computers, networks stuff, or like in my case,  my servers and switch &#8230;<br />
+Now you have your 20 units rack built in less than 1 hour and for less than 200kr!<br />
+Mine is just finished so it&#8217;s a little bare bone&#8230;<br />
+Add all bells and whistles you like!<br />
+Enjoy!</p>
+					</div><!-- end .post-entry -->
+
+	</div><!-- end .post-content -->
+</article><!-- #post-36 --><article id="post-31" class="post-31 post type-post status-publish format-standard hentry category-linux">
+	<header class="post-title">
+								<h1><a href="http://stakite.wordpress.com/2011/09/10/rsync-it/" rel="bookmark">Rsync it!</a></h1>								<a href="http://stakite.wordpress.com/2011/09/10/rsync-it/" class="post-permalink">		<p class="post-date">
+			<strong>10</strong>
+			<em>Saturday</em>
+			<span>Sep 2011</span>
+		</p>
+	</a>
+	<div class="post-info clear-fix">
+		<p>
+			Posted <span class="by-author"> by <span class="author vcard"><a class="url fn n" href="http://stakite.wordpress.com/author/simontakite/" title="View all posts by Simon Takite" rel="author">Simon Takite</a></span></span> in <a href="http://stakite.wordpress.com/category/linux/" title="View all posts in Linux" rel="category tag">Linux</a>		</p>
+		<p class="post-com-count">
+			<strong>&asymp; <a href="http://stakite.wordpress.com/2011/09/10/rsync-it/#comments" title="Comment on Rsync it!">1 Comment</a></strong>
+		</p>
+	</div><!-- end .post-info -->
+						</header><!-- end .post-title -->
+	<div class="post-content clear-fix">
+
+			<div class="post-extras">
+					</div><!-- end .post-extras -->
+
+		<div class="post-entry">
+			<p>rsync is used to perform the backup operation in UNIX / Linux.</p>
+<p>rsync utility is used to synchronize the files and directories from one location to another in an effective way. Backup location could be on local server or on remote server.</p>
+<p>Syntax<br />
+<code><br />
+$ rsync options source destination<br />
+</code></p>
+<p>Synchronize Files From Local to Remote</p>
+<p>rsync allows you to synchronize files/directories between the local and remote system.</p>
+<p><code><br />
+$ rsync -avz /root/temp/ simon@192.168.200.10:/home/simon/temp/<br />
+Password:<br />
+building file list ... done<br />
+./<br />
+rpm/<br />
+rpm/Basenames<br />
+rpm/Conflictname</p>
+<p>sent 15810261 bytes  received 412 bytes  2432411.23 bytes/sec<br />
+total size is 45305958  speedup is 2.87<br />
+</code></p>
+					</div><!-- end .post-entry -->
+
+	</div><!-- end .post-content -->
+</article><!-- #post-31 --><article id="post-7" class="post-7 post type-post status-publish format-standard hentry category-active-directory">
+	<header class="post-title">
+								<h1><a href="http://stakite.wordpress.com/2011/09/08/group-policy-for-beginners/" rel="bookmark">Group policy for&nbsp;beginners</a></h1>								<a href="http://stakite.wordpress.com/2011/09/08/group-policy-for-beginners/" class="post-permalink">		<p class="post-date">
+			<strong>08</strong>
+			<em>Thursday</em>
+			<span>Sep 2011</span>
+		</p>
+	</a>
+	<div class="post-info clear-fix">
+		<p>
+			Posted <span class="by-author"> by <span class="author vcard"><a class="url fn n" href="http://stakite.wordpress.com/author/simontakite/" title="View all posts by Simon Takite" rel="author">Simon Takite</a></span></span> in <a href="http://stakite.wordpress.com/category/active-directory/" title="View all posts in Active Directory" rel="category tag">Active Directory</a>		</p>
+		<p class="post-com-count">
+			<strong>&asymp; <a href="http://stakite.wordpress.com/2011/09/08/group-policy-for-beginners/#respond" title="Comment on Group policy for&nbsp;beginners">Leave a comment</a></strong>
+		</p>
+	</div><!-- end .post-info -->
+						</header><!-- end .post-title -->
+	<div class="post-content clear-fix">
+
+			<div class="post-extras">
+					</div><!-- end .post-extras -->
+
+		<div class="post-entry">
+			<p>Hei Again!</p>
+<p>Looks really good, and a great way for those new to group policy to start learning. I still recommend the books and links that I previously outlined..</p>
+<p>I know not everyone that works with AD also does Group Policy work but a large majority do. So here&#8217;s a nice source for <a href="http://www.microsoft.com/download/en/details.aspx?id=20092">Group Policy</a>:</p>
+<p>Thanks</p>
+					</div><!-- end .post-entry -->
+
+	</div><!-- end .post-content -->
+</article><!-- #post-7 -->
+	
+	</div><!-- end #content -->
+</div><!-- end #primary -->
+
+	<div id="secondary" class="widget-area" role="complementary">
+		
+		<aside id="categories-3" class="sidebar-widget widget_categories"><h1 class="widget-title">Categories</h1>		<ul>
+	<li class="cat-item cat-item-35699"><a href="http://stakite.wordpress.com/category/active-directory/" title="Active Directory er Microsofts katalogtjeneste for håndtering av brukere, brukerrettigheter, og ressurskontroll. Det er bygd opp som X.500, og er delvis LDAP-kompatibel. Active Directory brukes til autentisering av maskiner og brukere mot windows-domenet. Gjennom AD har man også muligheter for å administrere maskiner, kjøre script og tilpasse lokale oppsett.">Active Directory</a>
+</li>
+	<li class="cat-item cat-item-610"><a href="http://stakite.wordpress.com/category/linux/" title="Et fritt operativsystem. Det vil si at du som bruker har FULL bruksrett til all programvaren, og du har tilgang til kildekoden. Du kan dermed gjøre akkurat hva du vil, og du kan tilpasse og forbedre programvaren, dersom du har behov og kompetanse til det. I proprietære operativsystemer er du avhengig av at en tredjepartsleverandør fikser feilene. ">Linux</a>
+</li>
+		</ul>
+</aside><aside id="archives-3" class="sidebar-widget widget_archive"><h1 class="widget-title">Archives</h1>		<ul>
+	<li><a href='http://stakite.wordpress.com/2013/07/'>July 2013</a></li>
+	<li><a href='http://stakite.wordpress.com/2011/09/'>September 2011</a></li>
+		</ul>
+</aside>		<aside id="recent-posts-3" class="sidebar-widget widget_recent_entries">		<h1 class="widget-title">Recent Post</h1>		<ul>
+					<li>
+				<a href="http://stakite.wordpress.com/2013/07/26/lack-a-rack/">Lack -a- Rack</a>
+						</li>
+					<li>
+				<a href="http://stakite.wordpress.com/2011/09/10/rsync-it/">Rsync it!</a>
+						</li>
+					<li>
+				<a href="http://stakite.wordpress.com/2011/09/08/group-policy-for-beginners/">Group policy for&nbsp;beginners</a>
+						</li>
+				</ul>
+		</aside>
+	</div><!-- #secondary .widget-area -->
+
+
+		</div><!-- end #main -->
+	</div><!-- end #page-inner -->
+
+	<footer id="colophon" role="contentinfo">
+		<div id="footer">
+			<div id="footer-inner">
+				<div id="footer-inner-inner">
+					
+<div id="footer-widgets-holder">
+	<div id="footer-widgets" class="clear-fix">
+		<div class="footer-widget-item">
+					</div>
+		<div class="footer-widget-item">
+			<aside id="tag_cloud-2" class="footer-widget widget_tag_cloud"><h1>Cloud</h1><div style="overflow: hidden;"><a href="http://stakite.wordpress.com/category/active-directory/" style="font-size: 275%; padding: 1px; margin: 1px;"  title="Active Directory (2)">Active Directory</a> <a href="http://stakite.wordpress.com/category/linux/" style="font-size: 100%; padding: 1px; margin: 1px;"  title="Linux (1)">Linux</a> </div></aside>		</div>
+		<div class="footer-widget-item">
+					</div>
+		<div class="footer-widget-item">
+					</div>
+	</div><!-- end #footer-widgets -->
+</div><!-- end #footer-widgets-holder -->				</div><!-- end #footer-inner-inner -->
+			</div><!-- end #footer-inner -->
+		</div>
+		<div id="copyright">
+			<div id="copyright-inner">
+					<div id="copyright-inner-inner">
+					<p>
+						<a href="http://wordpress.com/?ref=footer_website">Create a free website or blog at WordPress.com</a>.
+		<a href="http://theme.wordpress.com/themes/chateau/" title="Learn more about this theme">The Chateau Theme</a>.					</p>
+				</div><!-- end #copyright-inner-inner -->
+			</div><!-- end #copyright-inner -->
+		</div><!-- end #copyright -->
+	</footer><!-- end #footer -->
+
+	<script type='text/javascript' src='//0.gravatar.com/js/gprofiles.js?ver=201421x'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://s2.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781g'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	</div>
+
+	<div id="bit" class="loggedout-follow-normal">
+		<a class="bsub" href="javascript:void(0)"><span id='bsub-text'>Follow</span></a>
+		<div id="bitsubscribe">
+
+					<h3><label for="loggedout-follow-field">Follow &ldquo;Simon Takite&rdquo;</label></h3>
+
+			<form action="https://subscribe.wordpress.com" method="post" accept-charset="utf-8" id="loggedout-follow">
+			<p>Get every new post delivered to your Inbox.</p>
+
+			<p id="loggedout-follow-error" style="display: none;"></p>
+
+			
+			<p><input type="email" name="email" value="Enter your email address" onfocus='this.value=(this.value=="Enter your email address") ? "" : this.value;' onblur='this.value=(this.value=="") ? "Enter email address" : this.value;'  id="loggedout-follow-field"/></p>
+
+			<input type="hidden" name="action" value="subscribe"/>
+			<input type="hidden" name="blog_id" value="27077003"/>
+			<input type="hidden" name="source" value="http://stakite.wordpress.com/"/>
+			<input type="hidden" name="sub-type" value="loggedout-follow"/>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="4b86fbcfd8" /><input type="hidden" name="_wp_http_referer" value="/" />
+			<p id='bsub-subscribe-button'><input type="submit" value="Sign me up" /></p>
+			</form>
+					<div id='bsub-credit'><a href="http://wordpress.com/signup/?ref=lof">Powered by WordPress.com</a></div>
+		</div><!-- #bitsubscribe -->
+	</div><!-- #bit -->
+<script type='text/javascript' src='http://s2.wp.com/wp-content/js/devicepx.js?m=1399919068g'></script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>	<script type="text/javascript">
+	var skimlinks_pub_id = "725X584219"
+	var skimlinks_sitename = "stakite.wordpress.com";
+	</script>
+	<script type="text/javascript" src="http://s.skimresources.com/js/725X1342.skimlinks.js"></script><script src="http://s.stats.wordpress.com/w.js?21" type="text/javascript"></script>
+<script type="text/javascript">
+st_go({'blog':'27077003','v':'wpcom','tz':'2','user_id':'0','subd':'stakite'});
+ex_go({'crypt':'UE40eW5QN0p8M2Y/RE1LVmwrVi5vQS5fVFtfdHBbPyw1VXIrU3hWLHhmK2FURjVLLSxrUXxTRWFBSGJ8X1R+OVpIL0c0Rks9UzMrK2NdTi9Hb018ZG1ZK2dYRXlrTm5zRFlBQTJrSndCTCYtfjE1VWlnNFlrWVRKUz9VX19UbVFddjEvSjlJc1YuV2IxU3VhenlGZEpiWjFTcFBsR1VGQWxRdlR3bndYTiZycjhiWUlyK0htb0tEYWpReGEvQWZHaTQwOEJ8T1VRUmsuJjEyJnk3XXNdYWc/VFhHUTNRcndEYi1qTjFmV3x5LE8vRT1wUjhnaWpQa2RCRC5TMFFQJSxOYnclJmI9S1gvOHwrJiVsbk56PWtGT2I0ZEpqVkJ0JUpLWlUlUzNWfHddR0xZTSxFanFZa3lubmYxLSw='});
+addLoadEvent(function(){linktracker_init('27077003',0);});
+	</script>
+<noscript><img src="http://stats.wordpress.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//stats.wordpress.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script></div><!-- end #page -->
+</body>
+</html>

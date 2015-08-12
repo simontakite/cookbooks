@@ -1,0 +1,68 @@
+# 
+# Unless  otherwise stated, the  source code distributed  with this book
+# can   be  redistributed in source    or  binary form   so  long  as an
+# acknowledgment  appears in derived source   files. The citation should
+# list  that the  code comes from  "Managing and Using MySQL"  published 
+# by O'Reilly & Associates.  This    code is under
+# copyright and  cannot be  included in any other book, publication,  or
+# educational product without permission from O'Reilly &  Associates. No
+# warranty  is  attached; we  cannot take responsibility   for errors or
+# fitness for use.
+# 
+# MySQL dump 7.1
+#
+# Host: localhost    Database: wedding
+#--------------------------------------------------------
+# Server version	3.22.32
+
+# drop database wedding;
+create database wedding;
+use wedding;
+
+#
+# Table structure for table 'people'
+#
+CREATE TABLE people (
+  people_id varchar(30) DEFAULT '' NOT NULL,
+  passwd varchar(30),
+  PRIMARY KEY (people_id)
+);
+
+#
+# Dumping data for table 'people'
+#
+
+INSERT INTO people VALUES ('hugh','huw8o3cEvVS8o');
+
+#
+# Table structure for table 'presents'
+#
+CREATE TABLE presents (
+  present_id int(11) DEFAULT '0' NOT NULL auto_increment,
+  present varchar(255),
+  shop varchar(100),
+  quantity varchar(30),
+  colour varchar(30),
+  price varchar(30),
+  people_id varchar(30),
+  PRIMARY KEY (present_id)
+);
+
+#
+# Dumping data for table 'presents'
+#
+
+INSERT INTO presents VALUES (1,'Mikasa Studio Nova Tivoli White 20 Piece Dinnerset','Myer','1','White','102.10',NULL);
+INSERT INTO presents VALUES (2,'Richmond Tigers autographed print (unframed)','www.greatmoments.com.au','1','NA','375.00',NULL);
+INSERT INTO presents VALUES (3,'Breville Rice Cooker','Myer','1','Silver','95.00','NULL');
+INSERT INTO presents VALUES (4,'Krups - Nespresso 986 coffee machine','Myer','1','Black','608.00',NULL);
+INSERT INTO presents VALUES (5,'Click Clack Airtight Cannisters - Small Coffee Jar 0.6 Ltr','Myer','3','Clear with White Lid','4.67ea (14.01 total)',NULL);
+INSERT INTO presents VALUES (6,'Avanti Twin Wall Mixing Bowls 2.8 Ltr','Myer','2','Silver','41.65ea (83.30 total)',NULL);
+INSERT INTO presents VALUES (7,'Lithograph - David Boyd \"Sorting the Score\", approx 1\' sq.','Port Jackson Press, 397 Brunswick St, Fitzroy','1','Blue on white','594.00',NULL);
+INSERT INTO presents VALUES (8,'Le Creuset Wok','Myer','1','Blue','258.00',NULL);
+INSERT INTO presents VALUES (9,'Willow 12 Tin Muffin Tray','Myer','1','Silver','9.07',NULL);
+INSERT INTO presents VALUES (10,'Baileys Comet 6 Ladder','Bunnings','1','Silver','97.50',NULL);
+INSERT INTO presents VALUES (11,'Makita Drill HP1500k','Bunnings','1','Black/Green','128.00','hugh');
+INSERT INTO presents VALUES (12,'Makita B04553 Palm Sander','Bunnings','1','Black/Green','121.99',NULL);
+INSERT INTO presents VALUES (13,'Stanley Shifting Spanner 6\'\'','Bunnings','2','Silver','10.40ea',NULL);
+

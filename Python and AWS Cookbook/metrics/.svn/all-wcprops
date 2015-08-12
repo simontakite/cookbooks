@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/!svn/ver/393746/internal/books/9781449305444/current/code/metrics
+END
+boto.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/!svn/ver/393746/internal/books/9781449305444/current/code/metrics/boto.cfg
+END
+metric_disk_usage
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/393746/internal/books/9781449305444/current/code/metrics/metric_disk_usage
+END
+metric_part_handler.py
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/!svn/ver/393746/internal/books/9781449305444/current/code/metrics/metric_part_handler.py
+END

@@ -1,0 +1,14 @@
+<?php
+echo "\n<table width=\"60%\">";
+echo "\n<tr>\n\t<td>";
+echo "\n<i>This is not really a gift registry.
+      It's a system that demonstrates how to access a MySQL DBMS using PHP,
+      and is downloadable source code that you can use freely under this
+      <A href=\"license.txt\">license</a>.
+      You can view the source of the three scripts that make up the system: 
+      <a href=\"source.php?page_url=index.php\">index.php</a> (this script), 
+      <a href=\"source.php?page_url=presents.php\">presents.php</a> (a script that shows the available presents), and
+      <a href=\"source.php?page_url=action.php\">action.php</a> (a script that adds and deletes presents from a shopping list).
+      You can download the complete source as a <a href=\"wedding.zip\">zip</a> file</i>";
+echo "\n\t</td>\n</tr>\n</table>\n<br>";
+?>

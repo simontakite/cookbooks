@@ -1,0 +1,71 @@
+'''
+Example: python backuppc.py trdtb-sql-1.uninett.no fullsize
+
+'''
+from bs4 import BeautifulSoup
+import urllib2
+import argparse
+ 
+backuppc = "http://10.0.0.5:8000/backuppc.html"
+header = {'User-Agent': 'Mozilla/5.0'} #Needed to prevent 403 error on backuppcpedia
+req = urllib2.Request(backuppc,headers=header)
+page = urllib2.urlopen(req)
+soup = BeautifulSoup(page)
+ 
+def backuppcHostInfo(hostname, hostinfo):
+
+	tablesoup = soup.find("table", { "class" : "sortable" })
+
+	for rowsoup in tablesoup.findAll("tr"):
+		
+		cellsoup = rowsoup.findAll("td")
+		host = cellsoup[0].find(text=True)
+		
+		if host == hostname:
+
+			user = cellsoup[1].findAll(text=True)	
+			full = cellsoup[2].findAll(text=True) 	
+			full_age = cellsoup[3].findAll(text=True)  	
+			full_size = cellsoup[4].findAll(text=True)	
+			speed = cellsoup[5].findAll(text=True) 	
+			incr = cellsoup[6].findAll(text=True)
+			incr_age = cellsoup[7].findAll(text=True)  	
+			last_backup = cellsoup[8].findAll(text=True)  	
+			state = cellsoup[9].findAll(text=True)  	
+			errors = cellsoup[10].findAll(text=True)  	
+			last_attempt = cellsoup[11].findAll(text=True)  
+
+	if hostinfo == "full":
+		print ''.join(full)
+	if hostinfo == "fullage":
+		print ''.join(full_age)
+	if hostinfo == "fullsize":
+		print ''.join(full_size)
+	if hostinfo == "speed":
+		print ''.join(speed)
+	if hostinfo == "incr":
+		print ''.join(incr)
+	if hostinfo == "incrage":
+		print ''.join(incr_age)
+	if hostinfo == "lastbackup":
+		print ''.join(last_backup)
+	if hostinfo == "state":
+		print ''.join(state)
+	if hostinfo == "errors":
+		print ''.join(errors)
+	if hostinfo == "lastattempt":
+		print ''.join(last_attempt)
+	else:
+		print 'No host found'
+	return
+
+if __name__ == "__main__":
+	parser = argparse.ArgumentParser(description='Retrieve host backuppc values from the backuppc host summary page')
+	parser.add_argument('hostname',action="store", help='Hostname for the backuppc host')
+	parser.add_argument('hostinfo',action="store", help='Specifies the cell to be fetched from the host table')
+	args = parser.parse_args()
+	hostname=args.hostname
+	hostinfo=args.hostinfo
+	
+	backuppcHostInfo(hostname, hostinfo)
+

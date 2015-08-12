@@ -1,0 +1,61 @@
+Source code examples
+
+Unless  otherwise stated, the  source code distributed  with this book
+can   be  redistributed in source    or  binary form   so  long  as an
+acknowledgment  appears in derived source   files. The citation should
+list  that the  code comes from  "Managing and Using MySQL"  published 
+by O'Reilly & Associates.  This    code is under
+copyright and  cannot be  included in any other book, publication,  or
+educational product without permission from O'Reilly &  Associates. No
+warranty  is  attached; we  cannot take responsibility   for errors or
+fitness for use.
+
+-------
+
+How to install this code:
+
+(1) Uncompress the archive into your Apache document tree
+
+	Example (for the .tar.gz file):
+    mkdir /usr/local/apache/htdocs/wedding
+	cp wedding.tar.gz /usr/local/apache/htdocs/wedding
+    cd /usr/local/apache/htdocs/wedding
+    tar xvzf wedding.tar.gz
+
+	Example (for the .zip file):
+    mkdir /usr/local/apache/htdocs/wedding
+	cp wedding.zip /usr/local/apache/htdocs/wedding
+    cd /usr/local/apache/htdocs/wedding
+    unzip wedding.zip
+
+(2) Create the database, tables, and sample data:
+
+    mysql -p<password> < wedding.db
+
+(3) Move and edit db.dummy.inc
+
+	mv db.dummy.inc db.inc
+    edit db.inc with your fave editor and change the username and password 
+    variables to match your username and password for accessing MySQL
+
+	(NOTE: this creates a security problem because the user can read the
+    contents of db.inc by retrieving it with their browser. There are at
+    least three ways to fix this. The best is to add the following to
+	your Apache httpd.conf file usually found in /usr/local/apache/conf/
+
+	<Files ~ "\.inc$">
+      Order allow,deny
+      Deny from all
+      Satisfy All
+    </Files>
+
+    Then, restart Apache with the command /usr/local/apache/bin/apachectl
+	restart  )
+
+(4) Enjoy! If you followed step (1) above exactly, you should be able to
+	use the application by requesting the following URL:
+
+	http://localhost/wedding/
+
+Any suggestions? Email hugh@computer.org. However, please note that I don't
+reply to setup or programming questions.

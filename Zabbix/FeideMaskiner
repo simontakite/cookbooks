@@ -1,0 +1,46 @@
+
+## Feidemaskiner documentation
+
+idp.feide.no
+idp-test.feide.no
+idp-backup.feide.no
+feide-prod01.uninett.no	
+feide-prod02.uninett.no	
+feide-prod03.uninett.no	
+feide-prod04.uninett.no	
+feide-test01.uninett.no
+feide-test02.uninett.no	
+openidp.feide.no
+mazarbul.uninett.no
+
+## Template
+
+feide-prod01.uninett.no	
+feide-prod02.uninett.no	
+feide-prod03.uninett.no	
+feide-prod04.uninett.no	
+feide-test01.uninett.no
+feide-test02.uninett.no	
+
+## Deviations
+
+idp.feide.no					- conn, http, info, innsyn, misc, sslcert, ssp
+idp-test.feide.no				- conn, http, info, innsyn, misc, sslcert, ssp
+idp-backup.feide.no				- conn, infom innsyn, misc
+openidp.feide.no 				- Info, openidp
+mazarbul.uninett.no				- conn, ftp, info, misc, ssh
+
+## Datainnsamlinger
+
+- Connectivity
+- FTP status
+- HTTP Status
+- Info
+- Innsyn
+- misc
+- openidp
+- ssh
+- sslcert
+- ssp
+
+## Triggers

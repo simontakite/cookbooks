@@ -1,0 +1,5 @@
+# Mirroring a system
+# /etc/ap/source-list
+dpkg --get-selections > package_list
+dpkg --set-selections < package_list
+apt-get dselect-upgrade

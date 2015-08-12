@@ -1,0 +1,10 @@
+- When doing math, use (( and ))
+--- var=$(($var1 + $var2))
+- When comparing numbers use (( and )) use "<,>,!=,==,>=,<=" operators
+--- if (( $var < 8 ))
+- When assigning to an array, enclose in parantheses ( and )
+--- array=($(command|command2 -opt1))
+- When referring to an array always enclose it in { and }
+--- var=${array[$index]}
+- Array item count:
+--- count=${#array[*]}

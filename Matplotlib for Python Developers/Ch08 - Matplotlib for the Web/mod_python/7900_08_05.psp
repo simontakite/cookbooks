@@ -1,0 +1,50 @@
+<%
+
+# select a non-GUI backend
+import matplotlib
+matplotlib.use('Agg')
+
+# import Figure and FigureCanvas, we will use API
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+
+# used to 'fake' file writing
+from cStringIO import StringIO
+
+# if 'data' is an argument and it's not empty
+if (form.has_key('data')) and form.getfirst('data') != '':
+   # parse the csv present in 'data' and generate a list of integer
+   data = [int(x) for x in form.getfirst('data').split(',')]
+
+   # do the plotting
+   fig = Figure()
+   canvas = FigureCanvas(fig)
+   ax = fig.add_subplot(111)
+   ax.plot(data)
+
+   # save the figure to the StringIO object
+   s = StringIO()
+   canvas.print_figure(s)
+
+   # set the content-type and the payload for the response
+   req.content_type = "image/png"
+   req.write(s.getvalue())
+
+# if 'data' is not set, then print an html page
+else:
+%>
+<html><head>
+<title>A simple script to generate a plot</title>
+<head>
+<body>
+<form method="POST" action="/matplotlib/mod_python/7900_08_05.psp">
+<p>
+<hr>
+<br />
+<input type="text" name="data" size=30 />
+<br />
+<input type="submit" value="Generate the Plot" />
+<br />
+<hr>
+</form>
+</body></html>

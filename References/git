@@ -1,0 +1,243 @@
+Basic Git sync/edit cycle:
+----------------------------------------
+
+Check the status of your working area:
+     git status      (roughly like 'svn status')
+
+Stage a modified file, including adding a new file not previously been tracked:
+     git add foo.cpp
+
+Diffs:
+     git diff                       (see what's changed that is NOT staged)
+     git diff --cached          (see what has been staged)
+     git difftool [--cached]   (graphical diff)
+
+Commit staged files:
+     git commit
+     git commit -a          (stage all modified (tracked) files and commit in one step)
+
+Remove a file from tracking:
+     git rm
+
+Remove a file from staging, but keep tracking it (i.e., unstage it but keep the mods):
+     git rm --cached
+
+Unstage a modified file (but leave it modified):
+     git reset HEAD <file>        (note to self: how does this differ from 'git rm --cached'?)
+
+Unmodify a modified file:
+     git checkout -- <file>         (equivalent to 'svn revert')
+
+Note: git expands its own wildcards, so use \* rather than * to indicate globbing.
+
+Move/rename a file:
+     git mv oldname newname
+
+View the logs:
+     git log
+     git log --pretty=format:"%h - %an, %ar : %s"
+          (see docs for all the option names)
+     git log --author=lg
+     git log --committer=ckulla
+     git log --before dateblah       (2.weeks, 3.days, 2010-01-15, etc.)
+     git log --after dateblah
+     git log --graph
+
+Visualize history graphically:
+     gitk                    (current branch)
+     gitk --all              (shows all branches)
+
+Change your last commit:
+     git commit --amend
+         That takes your staging area and uses it for the commit -- the last one. For example, to add a forgotten file.
+         If you have made no changes since your last commit, this lets you change the commit message.
+         For example:
+          git commit -m "initial commit"
+          git add forgotten_file
+          git commit --amend
+
+
+Branching, merging, tagging
+-----------------------------------------
+
+Show branches:
+     git branch                    (show all branches, current branch will have a *)
+     git branch --no-merged     (show branches with work not yet merged into the current branch)
+
+Switch your working code to a different branch:
+     git checkout <name>          (name == 'master' for the TOT master branch)
+
+Create a new branch:
+     git branch <name>
+
+Create a branch and switch to it at the same time:
+     git checkout -b <branchname>
+
+Delete a branch you don't need anymore:
+     git branch -d <branchname>
+
+Merge branch B with the currently checked-out branch:
+     git merge B
+
+If there are merge conflicts:
+     edit the files to fix the conflicts
+     git add <thefile>          (stage the file to mark it as resolved)
+OR
+     git mergetool
+
+Rebase -- merge your local changes ON TOP of another branch
+     git rebase <otherbranch>
+          (This replays everything you've done to your current branch, since it diverged from the 'other' branch,
+          onto otherbranch, and makes the merged result the new current branch.)
+          DO NOT rebase commits that you have pushed to a public repository.
+
+Interactive rebasing, also lets you squash multiple commits into one:
+     git rebase -i
+
+Interactive rebase, lets you modify the last 5 (e.g.) commits:
+     git rebase -i HEAD~5     (that's a tilde)
+                                        (you can 'p'ick, 's'quash, etc.)
+After rebase/squash, re-date the squashed patch to the final (or any particular) update:
+     git commit --amend --date="$(git show -s --pretty=tformat:%ai <sha1-of-last-change>)"
+Merge individual change into release branch and push to remote:
+     (in my local repo)
+     git checkout releasebranch
+     git checkout -b test       # make a test branch, same as release
+     git cherry -v test master  # list potential commits to merge
+     git cherry-pick <commit1>  <commit2>  <commit3>    # merge 'em
+     If that all looks correct, then:
+     git checkout releasebranch
+     git reset --hard test      # make releasebranch look like test
+     git push origin releasebranch:releasebranch --force   # push it to remote repo
+
+Tagging:
+     git tag                                                  # list tags
+     git tag -a <annotation> -m 'comment'      # create a tag
+     git tag -a v1.2 9fceb02                          # Create a tag of a past checkin
+               (the 9f... is a partial checksum that identifies the commit)
+
+
+Working with remotes
+----------------------------------
+
+Showing remotes:
+     git remote -v
+
+Add a remote repository (to pull from later)
+     git remote add <remotename> <url>      (choose a short tag for the remote name)
+
+Pull in the remote repository (but don't change your working area):
+     git fetch                         (if just one remote)
+     git fetch <remotename>  (to choose one of many remotes)
+     git fetch --all                    (to fetch from all remotes)
+
+Push your local repository changes to remote so others can see it:
+     git push <remotename> [<branchname>]
+     git push <name> --tags          (pushes the tags, too, which it doesn't do by default)
+
+Push just one branch:
+     git push origin frombranch:tobranch
+          (e.g. git push origin master:master --force)
+
+Create a tracking branch:
+     git branch --track feature1 origin/master
+          (branch feature1 set up to track remote branch refs/remotes/origin/master.)
+
+Remove or rename remote:
+     git remote rm <remotename>
+     git remote rename <oldname> <newname>
+
+Delete a remote branch:
+     git push <remotename>  :<branchname>     (yes, weird syntax with that space)
+
+Merge from a remote branch into canonical copy and make a clean linear history:
+     cd canonical              # that's the canonical repo, not my work repo
+     git checkout master      # make sure we're on master
+     git checkout -b test     # make test branch and change to it
+     git reset --hard lgritz/dev     # reset test to my private branch
+     git rebase master        # set test to master then reply the other changes
+     ... test it, etc. ...
+     git checkout master      # back to master branch
+     git reset --hard test           # make master point to test
+     git push origin master:master --force      # push that new master to the remote
+
+
+
+Git / SVN operations
+---------------------------------
+
+This script will generate a git authors file template from an svn repository:
+     #!/usr/bin/env bash
+     authors=$(svn log -q | grep -e '^r' | awk 'BEGIN { FS = "|" } ; { print $2 }' | sort | uniq)
+     for author in ${authors}; do
+       echo "${author} = NAME <USER@DOMAIN>";
+     done
+ 
+Clone an svn repostory into git:
+     git svn clone --prefix=svn/ --stdlayout --authors-file=myauthors.txt http://path/to/svn project_directory
+     cd project_directory     git-svn-abandon-fix-refs       (lg has these scripts)     git-svn-abandon-cleanup
+
+Update the local repository with the latest subversion changes:
+     git svn rebase
+
+Pull latest svn changes into our repository, but not into our working copy:
+     git svn fetch
+
+Push local branch to svn, each local commit as a separate svn commit:
+     git svn dcommit
+
+Push local branch to svn, catching everything up as one big commit:
+     git svn push
+
+Create a new svn branch:
+     git svn branch <name>
+
+Other svn commands:
+     git svn fetch
+     git svn log
+     git svn blame
+     git svn info
+
+Generate diff for codereview.appspot.com or SPI reviewboard:
+     git-post-review -n --parent=svn/trunk
+
+
+
+Other stuff:
+-----------------------
+
+Stashing:
+     git stash          (save your work without committing, to return later)
+     git stash list     (list your stashes)q
+     git stash apply [<stashname>]          (go back to a stash)
+     git stash apply --index                      (?)
+     git stash drop <stashname>              (abandon a stash)
+     git stash pop <stashname>          (apply the stash, then drop it)
+
+Bisection to track down errors:
+     git bisect start
+     git bisect bad
+     git bisect good <goodID>
+     ... test, git bisect {good,bad}, repeat
+     git bisect reset
+
+Incorporate one git project into another:
+     git submodule add git://github.com/blah/otherproject.git <dir>
+          beware cloning projects with submodules, you need extra commands to make it work
+          see Pro Git, p. 167
+
+Split apart a previous commit and redo it:
+    1. With gitk, right click on the commit you want to backtrack to (this may be one or more), and
+        then when it asks you for a reset type do a 'mixed' reset. (I think thats what its called).  
+        Then you'll have all the changes unstaged, and you can manually re-add/commit them
+        as needed in batches you find suitable.
+    2. --OR--  git reset --mixed SHA_TO_BACKTRACK_TO
+    3. --OR-- 
+          git rebase -i [origin/master or whatever]   and choose 'e' for edit on the commit you want to break up
+          git reset HEAD^ (though I prefer --hard and redo em)
+          git add --patch [file/to/break/up.cc]
+          git commit -c ORIG_HEAD [assuming you want to reuse that message]
+          git rebase --continue
+
+List all contributors to the project, ranked by number of commits:
+     git shortlog --numbered --summary

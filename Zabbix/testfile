@@ -1,0 +1,3 @@
+Host-name-of-zabbix_agentd-was-changed-on-{HOST.NAME}
+Version-of-zabbix_agent(d)-was-changed-on-{HOST.NAME}
+Zabbix-agent-on-{HOST.NAME}-is-unreachable-for-5-minutes

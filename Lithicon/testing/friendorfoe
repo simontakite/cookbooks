@@ -1,0 +1,8 @@
+#!/bin/bash
+USERID="$1"
+DETECTED=$( egrep -o "^$USERID:" < /etc/passwd )
+if [[ -n "${DETECTED}" ]] ; then
+	echo "User $USERID exists in /etc/passwd!"
+else
+	echo "User $USERID not found in /etc/passwd!"
+fi

@@ -1,0 +1,39 @@
+### Make new structure
+
+mkdir /net/projects/ts/RWE_DEA
+mkdir /net/projects/ts/RWE_DEA/Y2005
+mkdir /net/projects/ts/RWE_DEA/Y2006
+mkdir /net/projects/ts/RWE_DEA/Y2007
+mkdir /net/projects/ts/RWE_DEA/Y2008
+#mkdir /net/projects/ts/StatoilHydro
+mkdir /net/projects/ts/StatoilHydro/Y2005
+mkdir /net/projects/ts/StatoilHydro/Y2006
+#mkdir /net/projects/ts/StatoilHydro/Y2007
+#mkdir /net/projects/ts/StatoilHydro/Y2008
+mkdir /net/projects/ts/Ourhoud
+mkdir /net/projects/ts/Ourhoud/Y2005
+mkdir /net/projects/ts/Ourhoud/Y2006
+mkdir /net/projects/ts/Ourhoud/Y2007
+mkdir /net/projects/ts/PDO
+mkdir /net/projects/ts/PDO/Y2006
+mkdir /net/projects/ts/PDO/Y2007
+mkdir -p /net/projects/ts/SaudiAramco/Y2006
+mkdir -p /net/projects/ts/Total/Y2006
+mkdir -p /net/projects/ts/BritishGas/Y2007
+
+mkdir -p /net/projects/ts/Chevron-US/Y2007
+mkdir -p /net/projects/ts/Chevron-NO/Y2008
+
+mkdir /net/projects/ts/ENI
+mkdir /net/projects/ts/ENI/Y2007
+mkdir /net/projects/ts/ENI/Y2008
+mkdir -p /net/projects/ts/Rocksource/Y2007
+#mkdir -p /net/projects/ts/Shell/Y2007
+mkdir -p /net/projects/ts/Sonangol/Y2007
+mkdir -p /net/projects/ts/DetNorske/Y2008
+mkdir -p /net/projects/ts/Lundin/Y2008
+mkdir -p /net/projects/ts/Woodside/Y2008
+
+mkdir -p $TS/unsorted/Year2005
+mkdir $TS/unsorted/Year2007
+

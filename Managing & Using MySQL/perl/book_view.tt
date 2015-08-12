@@ -1,0 +1,43 @@
+<html>
+ <head>
+     <title>[% title %]</title>
+ </head>
+ <body bgcolor="#ffffff">
+    <h2>Enter a <i>single</i> title word.</h2>
+    <form method="post" action="/cgi-bin/book_view.cgi"
+enctype="application/x-www-form-urlencoded">    
+    <input type="text" name="titleword" value="[% titleword %]"
+/>    <input type="hidden" name="col" value="3" />
+    <input type="hidden" name="t" value="0" />
+    <input type="submit" name=".submit" value="Title Word" />
+    </form>
+    
+    <table border = 1> 
+      <tr bgcolor="#66cc66">
+[% FOREACH header = headers -%]
+[% IF header.name == 'ISBN' %]
+      <th colspan="2"><a href="/cgi-bin/book_view.cgi?titleword=[%
+titleword %]&col=[% header.col %]&t=[% header.toggle %]">[%
+header.name %]</a></th>[% ELSE %]
+      <th><a href="/cgi-bin/book_view.cgi?titleword=[% titleword
+%]&col=[% header.col %]&t=[% header.toggle %]">[% header.name
+%]</a></th>[% END %]
+[%- END -%]
+      </tr>
+[% FOREACH record = records -%]
+    [%- IF loop.count MOD 2 -%]
+      <tr bgcolor="#cccccc">
+	[%- ELSE -%]
+      <tr bgcolor="#ffccffcc">
+    [%- END -%]
+
+        <td align="right">[% loop.count %]</td>
+        <td>[% record.isbn.value %]</td>
+        <td>[% record.title.value %]</td>
+        <td align="right" nowrap>[% record.pubdate.value %]</td>
+        <td>[% record.author.value %]</td>
+      </tr>
+[% END %]
+    </table>
+    </body>
+</html>

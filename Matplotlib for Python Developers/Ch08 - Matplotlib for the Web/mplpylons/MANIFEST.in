@@ -1,0 +1,3 @@
+include mplpylons/config/deployment.ini_tmpl
+recursive-include mplpylons/public *
+recursive-include mplpylons/templates *

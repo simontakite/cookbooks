@@ -1,0 +1,232 @@
+# 
+# Archives
+##########################
+
+Command Description
+
+tar -c dir/ | bzip2 > dir.tar.bz2							Make archive of dir/
+bzip2 -dc dir.tar.bz2 | tar x								Extract archive (use gzip instead of bzip2 for tar.gz files)
+tar c dir/ | gzip | gpg -c | ssh user@remote 'dd of=dir.tar.gz.gpg'			Make encrypted archive of dir/ on remote machine
+find dir/ -name '*.txt' | tar c --files-from=- | bzip2 > dir_txt.tar.bz2		Make archive of subset of dir/ and below
+find dir/ -name '*.txt' | xargs cp -a --target-directory=dir_txt/ --parents		Make copy of subset of dir/ and below
+( tar c /dir/to/copy ) | ( cd /where/to/ && tar x -p )					Copy (with permissions) copy/ dir to /where/to/ dir
+( cd /dir/to/copy && tar c . ) | ( cd /where/to/ && tar x -p )				Copy (with permissions) contents of copy/ dir to /where/to/
+( tar c /dir/to/copy ) | ssh -C user@remote 'cd /where/to/ && tar x -p'			Copy (with permissions) copy/ dir to remote:/where/to/ dir
+dd bs=1M if=/dev/hda | gzip | ssh user@remote 'dd of=hda.gz'				Backup harddisk to remote machine
+
+
+#
+# Rsync
+#########################
+
+Command Description
+
+rsync -P rsync://rsync.server.com/path/to/file file					Only get diffs. Do multiple times for troublesome downloads
+rsync --bwlimit=1000 fromfile tofile							Locally copy with rate limit. It's like nice for I/O
+rsync -az -e ssh --delete ~/public_html/ remote.com:'~/public_html'			Mirror web site (using compression and encryption)
+rsync -auz -e ssh remote:/dir/ . && rsync -auz -e ssh . remote:/dir/			Synchronize current directory with remote one
+
+# 
+# File Searching
+#########################
+
+Command Description
+
+alias l='ls -l --color=auto'								quick dir listing
+ls -lrt											List files by date. See also newest
+find -name '*.[ch]' | xargs grep -E 'expr'						Search 'expr' in this dir and below.
+find -type f -print0 | xargs -r0 grep -F 'string'					Search all regular files for 'string' in this dir and below
+find -maxdepth 1 -type f | xargs grep -F 'string'					Search all regular files for 'string' in this dir
+find -maxdepth 1 -type f | xargs grep -F 'string'					Process each item with multiple commands (in while loop)	
+find -type f ! -perm -444								Find files not readable by all (useful for web site)
+find -type d ! -perm -111								Find dirs not accessible by all (useful for web site)
+locate -r 'file[^/]*.txt'								Search cached index for names. This re is like glob file.txt
+
+
+#
+# Network
+##############################
+Command Description
+
+ip link show										List interfaces
+ethtool interface									List interface status
+ip link set dev eth0 name wan								Rename eth0 to wan
+ip addr add 1.2.3.4/24 brd + dev eth0							Add ip and mask(255.255.255.0)
+ip link set dev interface up								Bring interface up (or down)
+ip route add default via 1.2.3.254							Set default gateway to 1.2.3.254
+host pixelbeat.org									Lookup ip address for name or vice versa
+hostname -i										Lookup local ip address (equivalent to host hostname)
+netstat -tupl										List internet services on a system
+netstat -tup										List active connections to/from system
+
+
+#
+# Wget (download tool)
+###########################
+
+Command Description
+
+(cd cmdline && wget -nd -pHEKk http://www.pixelbeat.org/cmdline.html)			Store local browsable version of a page to the current dir
+wget -c http://www.example.com/large.file						Continue downloading a partially downloaded file
+wget -r -nd -np -l1 -A "*.jpg" http://www.example.com/					Download a set of files to the current directory
+wget ftp://remote/file[1-9].iso/							FTP supports globbing directly
+wget -q -O- http://www.pixelbeat.org/timeline.html | grep 'a href' | head		Process output directly
+echo 'wget url' | at 01:00								Download url at 1AM to current dir
+wget --limit-rate=20k url								Do a low priority download (limit to 20KB/s in this case)
+wget -nv --spider --force-html -i bookmarks.html					Check links in a file
+wget --mirror http://www.example.com/							Efficiently update a local copy of a site (handy from cron)
+
+
+#
+# Windows (samba)
+############################
+
+Command Description
+
+smbtree											Find windows machines. See also findsmb
+nmblookup -A 1.2.3.4									Find the windows (netbios) name associated with ip address
+smbclient -L windows_box								List shares on windows machine or samba server
+mount -t smbfs -o fmask=666,guest //windows_box/share /mnt/share			Mount a windows share
+echo 'message' | smbclient -M windows_box						Send popup to windows machine (off by default in XP sp2)
+
+
+#
+# Math
+####################
+
+Command Description
+
+echo '(1 + sqrt(5))/2' | bc -l								Quick math
+echo 'obase=16; ibase=10; 123' | bc							Base conversion (decimal to hexadecimal)
+echo $((0x2dec))									Base conversion (hex to dec) ((shell arithmetic expansion))	
+echo 'pad=20; min=64; (10010^6)/((pad+min)8)' | bc					More complex (int) e.g. This shows max FastE packet rate
+echo 'pad=20; min=64; print (100E6)/((pad+min)*8)' | python				Python handles scientific notation
+echo 'pad=20; plot [64:1518] (100106)/((pad+x)8)' | gnuplot -persist			Plot FastE packet rate vs packet size
+
+#
+# String foo
+##################
+
+Command Description
+
+sed 's/string1/string2/g'								Replace string1 with string2
+sed 's/(.*)1/\12/g'									Modify anystring1 to anystring2
+sed '/ #/d; /^ $/d'									Remove comments and blank lines
+sed ':a; /\$/N; s/\\n//; ta'								Concatenate lines with trailing \
+sed 's/[ \t]*$//'									Remove trailing spaces from lines
+sed 's/([\`\"$\\])/\\1/g'								Escape shell metacharacters active within double quotes
+sed -n '1000p;1000q'									Print 1000th line
+sed -n '10,20p;20q'									Print lines 10 to 20
+sort file1 file1 file2 | uniq -u							Show lines in file2 not in file1
+echo 'Test' | tr '[:lower:]' '[:upper:]'						Case conversion
+tr -dc '[:print:]' < /dev/urandom							Filter non printable characters
+grep 'processor' /proc/cpuinfo | wc -l							Count lines
+
+#
+# Calendar
+##################
+
+Command Description
+
+cal -3											Display a calendar
+cal 9 1752										Display a calendar for a particular month year
+date -d fri										What date is it this friday.
+date --date='25 Dec' +%A								What day does xmas fall on, this year
+date --date '1970-01-01 UTC 1234567890 seconds'						Convert number of seconds since the epoch to a date
+TZ=':America/Los_Angeles' date								What time is it on West coast of US (use tzselect to find TZ)
+
+
+#
+# Locales
+####################
+
+Command Description
+
+printf "%'d\n" 1234									Print number with thousands grouping appropriate to locale
+echo "I live in locale territory"							Extract info from locale database
+locale | cut -d= -f1 | xargs locale -kc | less						List fields in locale database
+LANG=en_IE.utf8 locale int_prefix							Lookup locale info for specific country. See also ccodes
+
+
+#
+# Disk Space
+######################
+
+Command Description
+
+ls -lSr											Show files, biggest last
+du -s * | sort -k1,1rn | head								Show top disk users in current dir.
+df -h											Show free disk space
+df -i											Show free inodes
+fdisk -l										Show disks partitions sizes and types (run as root)
+rpm -q -a --queryformat '%10{SIZE}\t%{NAME}\n' | sort -k1,1n				List all packages by installed size (Bytes) on rpm distros
+dpkg-query -W --showformat='${Installed-Size;10}\t${Package}\n' | sort -k1,1n		List all packages by installed size (KBytes) on deb distros
+dd bs=1 seek=2TB if=/dev/null of=ext3.test						Create a large test file (taking no space)
+
+
+#
+# Monitoring / Debugging
+#############################
+
+Command Description
+
+strace -c ls >/dev/null									Summarise/profile system calls made by command
+strace -f -e open ls >/dev/null								List system calls made by command
+ltrace -f -e getenv ls >/dev/null							List library calls made by command
+lsof -p $$										List paths that process id has open
+lsof ~tcpdump not port 22								Show network traffic except ssh.
+ps -e -o pid,args --forest								List processes in a hierarchy
+ps -e -o pcpu,cpu,nice,state,cputime,args --sort pcpu | sed '/^ 0.0 /d'			List processes by % cpu usage
+ps -e -o rss=,args= | sort -b -k1,1n | pr -TW$COLUMNS					List processes by mem usage.
+ps -C firefox-bin -L -o pid,tid,pcpu,state						List all threads for a particular process
+ps -p 1,2										List info for particular process IDs
+for wtmp in ls -t /var/log/wtmp*; do last reboot -f $wtmp; done | grep reboot		Show system reboot history.
+free -m											Show amount of (remaining) RAM (-m displays in MB)
+
+#
+# System Info
+#######################
+
+Command Description
+
+hdparm -i /dev/hda									Show info about disk hda
+hdparm -tT /dev/hda									Do a read speed test on disk hda
+badblocks -s /dev/hda									Test for unreadable blocks on disk hda
+mount | column -t									Show mounted filesystems on the system (and align output)
+cat /proc/partitions									Show all partitions registered on the system
+grep MemTotal /proc/meminfo								Show RAM total seen by the system
+grep "model name" /proc/cpuinfo								Show CPU(s) info
+lspci -tv										Show PCI info
+lsusb -tv										Show USB info
+
+
+# 
+# Recode (Obsoletes iconv, dos2unix, unix2dos)
+######################################################
+
+Command Description
+
+recode -l | less									Show available conversions (aliases on each line)
+recode windows-1252.. file_to_change.txt						Windows "ansi" to local charset (auto does CRLF conversion)
+recode utf-8/CRLF.. file_to_change.txt							Windows utf8 to local charset
+recode iso-8859-15..utf8 file_to_change.txt						Latin9 (western europe) to utf8
+recode ../b64 < file.txt > file.b64							Base64 encode
+recode /qp.. < file.txt > file.qp							Quoted printable decode
+recode ..HTML < file.txt > file.html							Text to HTML
+recode -lf windows-1252 | grep euro							Lookup table of characters
+echo -n 0x80 | recode latin-9/x1..dump							Show what a code represents in latin-9 charmap
+echo -n 0x20AC | recode ucs-2/x2..latin-9/x						Show latin-9 encoding
+echo -n 0x20AC | recode ucs-2/x2..utf-8/x						Show utf-8 encoding
+
+
+#
+# Interactive
+######################
+
+Command Description
+
+mc											Powerful filemanager that can browse rpm, tar, ftp, ssh, ...
+screen											Virtual terminals with detach capability, ...
+links											Web browser
+gnuplot											Interactive/scriptable graphing
+octave											Matlab like environment

@@ -1,0 +1,20 @@
+This directory contains the major examples from the book Managing &
+Using MySQL, 2nd Edition, by George Reese, Randy Jay Yarger, and Tim
+King, ISBN 0-596-00211-4, published by O'Reilly & Associates.
+
+Unless otherwise stated, the source code distributed with this book
+can be redistributed in source or binary form so long as an
+acknowledgment appears in derived source files. The citation should
+list that the code comes from "Managing and Using MySQL" published by
+O'Reilly & Associates. This code is under copyright and cannot be
+included in any other book, publication, or educational product
+without permission from O'Reilly & Associates. No warranty is
+attached; we cannot take responsibility for errors or fitness for use.
+
+The subdirectories are:
+
+c/            Example from Chapter 12, C API
+perl/         Examples from Chapter 9, Perl
+php_wedding/  Example from Chapter 11, PHP
+python/       Example from Chapter 10, Python
+udf/          Example from Chapter 14, Extending MySQL
