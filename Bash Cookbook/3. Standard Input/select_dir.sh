@@ -7,7 +7,7 @@ until [ "$directory" == "Finished" ]; do
 
     printf "%b" "\a\n\nSelect a directory to process:\n" >&2
     select directory in $directorylist; do
-
+        
         # User types a number which is stored in $REPLY, but select
         # returns the value of the entry
         if [ "$directory" == "Finished" ]; then
