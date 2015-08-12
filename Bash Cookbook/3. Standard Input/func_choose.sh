@@ -21,11 +21,11 @@ function choose {
 
     case "$answer" in
         [yY1] ) eval "$choice_yes"
-            # error check
-            ;;
+        # error check
+        ;;
         [nN0] ) eval "$choice_no"
-            # error check
-            ;;
+        # error check
+        ;;
         *     ) printf "%b" "Unexpected answer '$answer'!" >&2 ;;
     esac
 } # end of function choose
