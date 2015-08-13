@@ -23,7 +23,7 @@ class MyFrame(wx.Frame):
         wxglade_tmp_menu = wx.Menu()
         wxglade_tmp_menu.Append(1, _("Create sqlite3 DataBase"), "", wx.ITEM_NORMAL)
         self.frame_1_menubar.Append(wxglade_tmp_menu,_("DataBase Configuration"))
-        
+
         wxglade_tmp_menu = wx.Menu()
         wxglade_tmp_menu.Append(2, _("Message"), "", wx.ITEM_NORMAL)
         self.frame_1_menubar.Append(wxglade_tmp_menu,_("About"))
@@ -139,48 +139,48 @@ class MyDialog1(wx.Dialog):
             for i in range(0,RowNum):
                 DataColumnsList.append(str(self.grid_1.GetCellValue(i,0)))
                 DataTypeList.append(str(self.grid_1.GetCellValue(i,1)))
-            
+
             for i in range(len(DataColumnsList)):
                 DataString.append(DataColumnsList[i]+ " " + DataTypeList[i])
-            
+
             elem= ",".join(DataString)
             CreateQuery = ("""CREATE TABLE """ + DataTableName + """(%s)"""%elem)
 
             if not os.path.isfile("CreationLog.txt"):
                 f=open("CreationLog.txt","w")
-            
+
             with open("CreationLog.txt","r+") as NewLog:
                 OldLog=NewLog.read()
                 NewLog.seek(0)
                 NewLog.write(OldLog + "\nCreated on "+str(datetime.date.isoformat(datetime.datetime.now())) + " in '"+ ConnectionString + "' ,Used Query : "+ CreateQuery+"\n")
-                
-                
+
+
             if not os.path.exists(self.txtFileName.Value):
                 os.makedirs(self.txtFileName.Value)
             else:
                 wx.MessageBox("The Folder Already Exists, but you can add to it data tables!")
-            
+
             cnn = sqlite3.connect(ConnectionString)
             cursor=cnn.cursor()
             cursor.execute(CreateQuery)
             cnn.commit
             cnn.close()
-            
+
             self.txtDataFileOutput.Value=("A Data File Named "+self.txtDataName.Value+".db Was Created in "+ self.txtFileName.Value)
-        
+
         except OSError:
             wx.MessageBox("The Grid Is Empty!")
         event.Skip()
 
     def clk_reset_grid(self, event):
         r=self.grid_1.GetNumberRows()
-        
+
         for i in range(0,r):
             self.grid_1.DeleteRows(1,i)
-        
+
         for c in range(0,2):
             self.grid_1.SetCellValue(0,c,"")
-        
+
         self.txtFileName.Value=""
         self.txtDataName.Value=""
         self.txtDataTable.Value=""

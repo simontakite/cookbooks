@@ -125,13 +125,13 @@ class Fetcher(object):
                     if url not in self:
                         self.urls.append(url)
 
-def getLinks(url):      
+def getLinks(url):
     page = Fetcher(url)
     page.fetch()
     for i, url in enumerate(page):
         print "%d. %s" % (i, url)
 
-    
+
 def parse_options():
     """parse_options() -> opts, args
 
@@ -164,45 +164,45 @@ def parse_options():
 def main():
 
     sTime = time.time()
-    
+
     for url in open("testfile.txt", "r"):
 
         depth = 30
-    
+
         sTime = time.time()
-    
+
         print "Crawling %s (Max Depth: %d)" % (url, depth)
-        crawler = Crawler(url, depth)   
+        crawler = Crawler(url, depth)
         crawler.crawl()
-        
+
         html = ""
         for link in crawler.urls:
-            
+
             try:
                 htmlFile = urllib2.urlopen(link)
                 html = htmlFile.read()
-                
+
             except Exception:
-                pass             
-            
+                pass
+
             regexp_email = re.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b',re.IGNORECASE)
             pattern = re.compile(regexp_email)
             emailAddress = re.findall(pattern, html)
-            
+
             emailfile = open ("emails.txt", "a")
-            
+
             if emailAddress:
                 print emailAddress
                 print>>emailfile, "\n".join(emailAddress)
-                
-            
+
+
         eTime = time.time()
         tTime = eTime - sTime
-    
+
         print "Found:    %d" % crawler.links
         print "Followed: %d" % crawler.followed
         print "Stats:    (%d/s after %0.2fs)" % (int(math.ceil(float(crawler.links) / tTime)), tTime)
         print "-"*120
-    
+
 if __name__ == "__main__":
     main()
