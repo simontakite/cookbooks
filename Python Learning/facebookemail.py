@@ -1,7 +1,7 @@
 #usr/bin/env/python
 """
 This script can get the user data from facebook.com.
-This is written for better understanding of python 
+This is written for better understanding of python
 Modules required:BeautifulSoup
 Author:Ajay Kumar Medepalli aka Cybercam
 Blog:http://pythonnotesbyajay.blogspot.in/
@@ -38,13 +38,10 @@ def get_fb_username(id):
             user_name_array.append(user_name)
             print "username ==>"+'\t'+user_name +'\t'+ "gender ==>"+"\t"+gender
             print "\n"
-        
+
     except urllib2.HTTPError:
         pass
-
-
-    
-
+        
 for i in range(4,10,1):
 #for i in range(startvalue,stopvalue,stepvalue):
     get_fb_username(i+1)
@@ -67,10 +64,9 @@ def send_mail():
         msg['From'] = fromaddr
         msg['To'] = user_name_array[i]
         msg['Subject'] = 'hi'
-        
-        msg.attach(MIMEText(random_text[random.randint(0,len(random_text)-1)]))
-        #msg.attach(MIMEText('put some custom message.', 'plain')) 
-        server.sendmail(fromaddr,user_name_array[i],msg.as_string())
-    server.quit()  
-send_mail()
 
+        msg.attach(MIMEText(random_text[random.randint(0,len(random_text)-1)]))
+        #msg.attach(MIMEText('put some custom message.', 'plain'))
+        server.sendmail(fromaddr,user_name_array[i],msg.as_string())
+    server.quit()
+send_mail()
